@@ -1,0 +1,110 @@
+\documentclass[
+	11pt,
+	a4paper,
+	% kosection,
+	% footnote,
+	% nobookmarks,
+	% microtype,
+	figtabcapt,
+%	lwarp
+]{oblivoir}
+
+%%%%%%%%%%%%%%%%
+% Front Matter %
+%%%%%%%%%%%%%%%%
+
+\input{setup/packages}							% Declare packages
+\input{setup/week2_defs.tex}
+%%%%%%%%%%
+% Title, Authors, Date %
+%%%%%%%%%%
+
+\title{\vspace{-4cm}Week 2 : Attention is All you Need}
+\author{120220210 고재현}
+\date{\today}
+
+\begin{document}
+
+%%%%%%%%%%
+% covers %
+%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%
+% Table of Contents %
+%%%%%%%%%%%%%%%%%%%%%
+\maketitle
+
+% \begin{abstract}
+% 이 문서는 2022 인공지능개론(EEE4178) 과목의 설명서이다.
+
+% \end{abstract}
+
+\pagenumbering{roman}                           % Start page numbering in Roman numerals
+% \tableofcontents*        						% Add table of contents
+% \clearpage
+
+%%%%%%%%%%%%%%%%%
+% preliminaries %
+%%%%%%%%%%%%%%%%%
+
+\setcounter{table}{0}		                    % Reset table counter
+\setcounter{figure}{0}		                    % Reset figure counter
+
+%%%%%%%%%%%%%
+% Main Text %
+%%%%%%%%%%%%%
+
+\pagenumbering{arabic}							% Start page numbering in Arabic numerals
+
+\section{Introduction}
+Seq2Seq-Attention 모델은 Neural Machine Translation(NMT)에서 가장 유명한 모델 중 하나였다.
+Seq2Seq에 Attention 메커니즘을 추가함으로써 기존의 Seq2Seq 모델의 Long-Term Memory에 관한 문제점을 해결하고자 했다.
+본 논문에서 Transformer 모델 \cite[Transformer]{NIPS2017_3f5ee243} 을 제안함으로써 Seq2Seq 구조를 완전히 제거함으로써
+문제를 해결하였다.
+
+\section{Transformer Architecture}\label{sec:transformer_architecture}
+트랜스포머의 수학적 표기는 \cite{min2022transformer}에 설명되어 있다.
+논문에서는, 트랜스포머를 다중 self-attention 블록으로 구성된 새로운 인코더-디코더 아키텍처로 소개한다.
+각 트랜스포머 레이어의 입력을 $\BX \in \mathbb{R}^{n\times d}$라 하면 ($n$은 토큰 수, $d$는 각 토큰의 차원),
+한 블록 레이어는 $f_\theta: \mathbb{R}^{n \times d} \rightarrow \mathbb{R}^{n \times d}$ 함수로 정의되고,
+$f_\theta(\BX)=:\BZ$로 정의되며, 다음과 같다.
+
+\begin{align}
+	\mathbf{A}&=\frac{1}{\sqrt{d}} \mathbf{X Q}(\mathbf{X}\mathbf{K})^{\top}, \label{eq:attention1}\\
+	\widetilde{\BX}&=\operatorname{SoftMax}(\mathbf{A}) (\mathbf{X} \mathbf{V}), \label{eq:attention2}\\
+	\mathbf{M}&=\operatorname{LayerNorm}_{1}(\widetilde{\BX}\BO+\mathbf{X}), \label{eq:attention3}\\
+	\mathbf{F}&=\sigma(\mathbf{M W}_1+\mathbf{b}_1) \mathbf{W}_2+\mathbf{b}_2, \label{eq:ffn}\\
+	\mathbf{Z}&=\operatorname{LayerNorm}_{2}(\mathbf{M}+\mathbf{F}), \label{eq:layernorm}
+\end{align}
+	
+여기서 식 \ref{eq:attention1}, 식 \ref{eq:attention2}, 식 \ref{eq:attention3}은 어텐션 계산을 나타내며, 식 \ref{eq:ffn}, 식 \ref{eq:layernorm}은 위치별 feed-forward 네트워크 (FFN) 레이어이다.
+여기에서 $\text{Softmax}(\cdot)$은 row-wise softmax 함수를, $\text{LayerNorm}(\cdot)$은 layer normalization 함수를 참조하며, $\sigma$는 활성화 함수를 나타낸다. $\BQ,\BK,\BV,\BO \in \mathbb{RR}^{d\times d_f},\b_1 \in \mathbb{R}^{d_f},\BW_2 \in \mathbb{R}^{d_f\times d} ,\b_2 \in \mathbb{R}^{d}$는 레이어의 학습 가능한 매개변수이다.
+또한, 자기 어텐션을 다중 어텐션으로 확장하기 위해 여러 어텐션 헤드를 고려하는 것이 일반적이다. 구체적으로, $\BQ,\BK,\BV$는 $H$개의 헤드로 분해되며, $d=\sum_{h=1}^{H}d_h$로 각각 $\BQ^{(h)},\BK^{(h)},\BV^{(h)} \in \mathbb{R}^{d\times d_h}$로 표기된다. 어텐션 헤드에서 나온 행렬 $\widetilde{\BX}^{(h)} \in \mathbb{R}^{n \times d_h}$는 연결(concatenated)하여 $\widetilde{\BX}$를 얻는다. 이 경우, 식 \ref{eq:attention1}과 식 \ref{eq:attention2}는 각각 다음과 같이 수정될 수 있다.
+
+\begin{align}
+\BA^{(h)}=\frac{1}{\sqrt{d}} \BX \BQ^{(h)}(\BX\BK^{(h)})^{\top}, \
+\widetilde{\BX}=|_{h=1}^{H}(\operatorname{SoftMax}(\BA^{(h)}) \BX \BV^{(h)}).
+\end{align}
+
+다중 헤드 메커니즘은 모델이 다른 측면에서 표현을 암묵적으로 학습할 수 있도록 한다.
+어텐션 메커니즘 외에도, 이 논문은 $\operatorname{sine}$ 및 $\operatorname{cosine}$ 함수를 서로 다른 주파수로 사용하여 각 토큰의 위치를 구분하기 위한 위치 임베딩으로 사용한다.
+
+위치 임베딩은 각 토큰의 상대적인 위치 정보를 모델에 전달하기 위해 사용되며, 코사인 함수와 사인 함수의 주기적인 변화를 이용하여 표현된다. 위치 $pos$와 임베딩 차원 $i$에 대한 위치 임베딩 값 $PE_{pos,i}$은 다음과 같이 정의된다.
+
+
+\begin{align}
+	PE(pos, 2i) &= sin(pos / (10000 ^ {(2i / d)})) \\
+	PE(pos, 2i+1) &= cos(pos / (10000 ^ {(2i / d)}))
+\end{align}
+
+여기서 $d$는 임베딩 차원의 크기를 나타낸다. 위치 임베딩은 입력 토큰의 임베딩 벡터와 더해져 각 토큰의 상대적인 위치 정보를 반영한 새로운 임베딩 벡터를 생성한다.
+%%%%%%%%%%%%%%%%%%%%%%
+% References Section %
+%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{ieeetr}						% Declare bibliography style
+\bibliography{week2.bib}							% Declare bibliography file
+
+\clearpage
+
+\end{document}

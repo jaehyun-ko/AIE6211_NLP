@@ -1,0 +1,363 @@
+
+
+
+\usepackage{cleveref} % should be put after other packages
+%  using always captial letter
+\crefname{section}{Section}{Sections}
+\crefname{theorem}{Theorem}{Theorems}
+\crefname{lemma}{Lemma}{Lemmas}
+\crefname{equation}{Equation}{Equations}
+\crefname{proposition}{Proposition}{Propositions}
+\crefname{claim}{Claim}{Claims}
+\crefname{appendix}{Appendix}{Appendices}
+  \crefname{algorithm}{Algorithm}{Algorithms}
+\crefname{figure}{Figure}{Figures}
+\crefname{table}{Table}{Tables}
+\crefname{remark}{Remark}{Remarks}
+\crefname{definition}{Definition}{Definitions}
+\crefname{equatinon}{Equation}{Equations}
+\crefname{corollary}{Corollary}{Corollaries}
+%  \crefname{equation}{Equation}{Equations}
+%  \crefname{proposition}{proposition}{propositions}
+%  \crefname{claim}{claim}{claims}
+% usage:
+%In the first argument of \crefname{}{}{} comes the type of reference (equation, figure, table, section, etc.). The second argument contains the word that is printed if only one reference is made and the third argument contains the plural form for multiple references.
+
+
+\allowdisplaybreaks
+
+\usepackage{thmtools}
+\usepackage{thm-restate}
+%one example:
+%\begin{theorem}[name=good,restate=foo]
+%content...
+%\end{theorem}
+%\foo*
+
+
+%  circled text
+%\textcircled{\raisebox{-0.9pt}{8}}
+\let \oldtextcircled \textcircled
+\renewcommand{\textcircled}[1]{\oldtextcircled{\footnotesize #1}}
+
+
+\def\labelitemi{-}
+% set margin of list
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=9mm}
+
+
+%\newcommand{\todo}[1]{\textcolor{red}{@todo:}#1}
+%\usepackage[textsize=small]{todonotes}
+\newcommand{\appendixtitle}[1]{
+   \begin{center}
+       \LARGE \bf #1
+   \end{center}
+}
+
+% statistical notations
+
+% independent
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+
+\def\C{{\cal C}}
+\def\S{{\cal S}}
+\def\E{{\mathbb E}}
+\def\X{{\cal X}}
+\def\Y{{\cal Y}}
+\def\H{{\mathbb  H}}
+\def\Z{{\mathbb Z}}
+\def\L{{\cal L}}
+\def\N{{\cal N}}
+
+\def\cone{{\cal K}}
+
+%\def\A{{\mathscr A}}
+\def\M{{\cal M}}
+\def \I {{\cal{I}}}
+\def\T {\mathbb{T}}
+\def\opt{\ensuremath{\Omega^*}}
+\def\optcont{\ensuremath{\x^*}}
+\newcommand{\opti}[1]{x^*_{#1}} % ith entry of opt, used
+% in double greedy proof
+
+%% bold small letters
+%\def \c{\bm{c}}
+%\def \v{\bm{v}}
+%\def \w{\bm{w}}
+%\def \r{\bm{r}}
+%\def \b{\bm{b}}
+%\def \d{\bm{d}}
+%\def \a{\bm{a}}
+%\def \x{\mathbf{x}}
+%\def \y{\bm{y}}
+%\def \s{\bm{s}}
+%\def \e{\bm{e}}
+%\def \u{\bm{u}}
+%\def \bmu{\bm{u}}
+%\def \z{\bm{z}}
+%\def \h{\bm{h}}
+
+
+
+% bold small letters
+\def \c{\mathbf{c}}
+\def \v{\mathbf{v}}
+\def \w{\mathbf{w}}
+\def \r{\mathbf{r}}
+\def \a{\mathbf{a}}
+\def \b{\mathbf{b}}
+\def \d{\mathbf{d}}
+\def \x{\mathbf{x}}
+\def \y{\mathbf{y}}
+\def \s{\mathbf{s}}
+\def \e{\mathbf{e}}
+\def \u{\mathbf{u}}
+\def \bmu{\mathbf{u}}
+\def \t{\mathbf{t}}
+\def \z{\mathbf{z}}
+\def \h{\mathbf{h}}
+\def \bu{\mathbf{u}}
+\def \q{\mathbf{q}}
+\def \k{\mathbf{k}}
+\def \v{\mathbf{v}}
+\def \f{\mathbf{f}}
+\def \n{\mathbf{n}}
+\def \g{\mathbf{g}}
+
+\def \BO{\mathbf{O}}
+\def \BK{\mathbf{K}}
+\def \BA{\mathbf{A}}
+\def \BB{\mathbf{B}}
+\def \BX{\mathbf{X}}
+\def \BY{\mathbf{Y}}
+\def \BI{\mathbf{I}}
+\def \BC{\mathbf{C}}
+\def \BD{\mathbf{D}}
+\def \BE{\mathbf{E}}
+\def \BH{\mathbf{H}}
+\def \BL{\mathbf{L}}
+\def \BM{\mathbf{M}}
+\def \BG{\mathbf{G}}
+\def \BP{\mathbf{P}}
+\def \BQ{\mathbf{Q}}
+\def \BR{\mathbf{R}}
+\def \BS{\mathbf{S}}
+\def \BU{\mathbf{U}}
+\def \BV{\mathbf{V}}
+\def \BW{\mathbf{W}}
+\def \BZ{\mathbf{Z}}
+% compatibable with aistats
+\def \bmA{\mathbf{A}}
+\def \bmH{\mathbf{H}}
+\def \bmL{\mathbf{L}}
+\def \bmX{\mathbf{X}}
+\def \bmY{\mathbf{Y}}
+\def \bmI{\mathbf{I}}
+\def \bmW{\mathbf{W}}
+\def \bmZ{\mathbf{Z}}
+
+
+\def \BLambda{\mathbf{\Lambda}}  % B or b, depend on the first letter of the symbol
+\def \BSigma{\mathbf{\Sigma}}
+\def \bsigma{\bm{\sigma}}
+\def \btheta{\bm{\theta}}
+\def \blambda{\bm{\lambda}}
+\def \balpha{\bm\alpha}
+\def \bphi{\bm{\phi}}
+
+
+\def \bmsigma{\bm{\sigma}}
+\def \bmtheta{\bm{\theta}}
+\def \bmlambda{\bm{\lambda}}
+\def \bmalpha{\bm\alpha}
+\def \bmphi{\bm{\phi}}
+\def \bmchi{\bm{\chi}}
+
+
+\def \P{{\cal{P}}}
+\def \Q{{\cal{Q}}}
+\def \W{{\cal{W}}}
+\def \B{{\cal{B}}}
+\def \R{{\mathbb{R}}}
+%  the transpose
+\def \trans{\top}
+% trace
+\newcommand{\tr}[1]{\text{tr}(#1)}
+\newcommand{\pare}[1]{{#1}}  % parethese sth, with extra {} added, used in a
+% math mode
+
+
+\def \D{{\cal{D}}}
+\def \V{{\cal{V}}}
+\def \E{{\mathbb{E}}} %  expection
+
+\newcommand{\MAXCUT}{{\textsc{MaxCut}}}
+\newcommand{\LOVASZ}{Lov{\'a}sz }
+\newcommand{\maxcut}{{\textsc{MaxCut}}}
+
+\newcommand{\argmin}{{\arg\min}}
+\newcommand{\diag}{{\text{diag}}}
+\newcommand{\dom}[1]{{\texttt{dom}(#1)}}
+\newcommand{\sign}[1]{{\text{sign}(#1)}}
+\newcommand{\dep}{{\text{Dep}}} % dependency set of a set function
+\newcommand{\var}{{\text{Var}}} %  variance
+\newcommand{\argmax}{{\arg\max}}
+\newcommand{\algname}[1]{{\textsc{#1}}}
+\newcommand{\note}[1]{\textcolor{blue}{//}#1}
+%\newcommand{\spt}[1]{{\texttt{supp}^+}(#1)}
+\newcommand{\spt}[1]{{\texttt{supp}}(#1)}
+\newcommand{\dtp}[2]{\langle #1, #2\rangle}% dot product
+\newcommand{\de}[1]{\text{det}\left(#1\right)}% determinant of a square matrix
+\newcommand{\fracpartial}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\fracppartial}[2]{\frac{\partial^2 #1}{\partial #2}}
+
+
+\newcommand{\lleq}{\preceq}
+\newcommand{\ggeq}{\succeq}
+\renewcommand{\ll}{\prec}
+\renewcommand{\gg}{\succ}
+
+\newcommand{\bas}{\mathbf{e}} % standard basis
+%\def \chara{\bm{\chi}} % characteristic vector
+\def \chara{\mathbf{e}} % characteristic vector
+
+\def \cg{L}
+\def\A{{\mathscr{A}}}
+
+%% Standard
+\newcommand{\groundset}{\ensuremath{\mathcal{V}}}
+\newcommand{\groundsett}{\ensuremath{{E}}}
+\newcommand{\contsub}{continuous submodular }
+\newcommand{\NEWDR}{\texttt{weak DR}}
+
+
+\newcommand{\set}[2]{#1\!\!\gets\!\! #2}
+%\newcommand{\sete}[3]{\mathbf #1|#1_{#2}\!\!\gets\!\! #3}
+\newcommand{\sete}[3]{\mathbf #1|_{#2} #3}
+%  set x(i) to be k,  only make the first argument as bold face, not including the superscript or subscript
+
+% new theorem
+%
+%\newtheorem{example}{Example}
+%\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+%\newtheorem{proposition}{Proposition}[section]
+%\newtheorem{remark}{Remark}[section]
+%\newtheorem{corollary}{Corollary}[section]
+%\newtheorem{definition}{Definition}[section]
+%\newtheorem{conjecture}{Conjecture}[section]
+%\newtheorem{axiom}{Axiom}[section]
+%\newtheorem{claim}{Claim}[section]
+\newtheorem{assumption}{Assumption}
+\newtheorem{theorem}{Theorem}
+%\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem{claim}{Claim}
+\newtheorem{observation}{Observation}
+
+
+% floor and ceil
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+% new
+\newcommand{\parti}{\text{Z}} % partition function
+\newcommand{\zero}{\mathbf{0}} % vector zero
+\newcommand{\one}{\mathbf{1}} % vector zero
+\newcommand{\ele}{v} % element of a ground set
+\newcommand{\multi}{f_{\text{mt}}} % multilinear extension
+\newcommand{\prob}{\text{P}} % probability
+\newcommand{\bigo}[1]{\mathcal {O}\! \left(#1\right)}
+
+\newcommand{\EBE}[1]{{\mathbb E}\left[#1\right]}  % expectation with brackets that are extensible
+\newcommand{\EB}[1]{{\mathbb E}[#1]}  % expectation with brackets
+
+\newcommand{\mixingmat}{\BW}
+\def\dist{{\cal D}} % distribution
+
+\newcommand{\pa}{\text{PA}}
+\newcommand{\intermed}{\mathbf{o}}
+\def \bu{\mathbf{u}}
+\def \bmmu{\bm{\mu}}
+\def \m{\mathbf{m}}
+
+\def \flweights {R} % facility location weights
+
+
+% quantum computing
+% Dirac Kets
+\newcommand{\ket}[1]{\ensuremath{\left|#1\right\rangle}}
+
+% macros from cocoa and cola
+\newcommand{\cocoa}{\textsc{CoCoA}\xspace}
+\newcommand{\cola}{\textsc{CoLa}\xspace}
+\newcommand{\diging}{{DIGing}\xspace}
+\newcommand{\cocoap}{\textsc{CoCoA$\!^{\bf \textbf{\footnotesize+}}$}\xspace}
+\newcommand{\cocoapm}{\textsc{CoCoA/$\!^{\bf \textbf{\footnotesize+}}$}\xspace}
+\newcommand{\proxcocoa}{\textsc{CoCoA}\xspace}%
+\newcommand{\dcocoa}{\textsc{D-CoCoA}\xspace}%
+\newcommand{\glmnet}{\textsc{glmnet}\xspace}
+
+% stepsize
+\newcommand{\stepsize}{stepsize\xspace}
+\newcommand{\stepsizes}{stepsizes\xspace}
+
+
+% alg names for cont. submodular max.
+\newcommand{\pga}{\algname{PGA}\xspace}
+\newcommand{\nonconvexfw}{\algname{non-convex FW}\xspace}
+\newcommand{\submodularfw}{\algname{submodular FW}\xspace}
+\newcommand{\shrunkenfw}{\algname{shrunken FW}\xspace}
+\newcommand{\twophasefw}{\algname{two-phase FW}\xspace}
+\newcommand{\ssfw}{\algname{SSFW}\xspace}
+
+
+% from non-submodular max.
+\def \bmA{\mathbf{A}}
+\def \bmB{\mathbf{B}}
+\def \bmX{\mathbf{X}}
+\def \bmI{\mathbf{I}}
+\def \bmC{\mathbf{C}}
+\def \bmD{\mathbf{D}}
+\def \bmE{\mathbf{E}}
+\def \bmL{\mathbf{L}}
+\def \bmM{\mathbf{M}}
+\def \bmG{\mathbf{G}}
+\def \bmP{\mathbf{P}}
+\def \bmQ{\mathbf{Q}}
+\def \bmLambda{\mathbf{\Lambda}}
+\def \bmSigma{\mathbf{\Sigma}}
+\def \bmsigma{\bm{\sigma}}
+\def \bmtheta{\bm{\theta}}
+\def \bmlambda{\bm{\lambda}}
+\def \bmalpha{\bm{\alpha}}
+\def \bmmu{\bm{\mu}}
+\def \bmxi{\bm{\xi}}
+\def \xdisc{\hat{\x}}
+% cardinality constraint
+\newcommand{\card}{\ensuremath{k}\xspace}
+
+% greedy curvature
+\newcommand{\cur}{\ensuremath{\alpha}}
+\newcommand{\greedycur}{\ensuremath{\alpha^{\text{G}}}}
+
+% my emph
+\newcommand{\emp}[1]{\texttt{#1}}
+
+
+\newcommand{\shapley}{\ensuremath{\text {Sh}}}
+\newcommand{\banzhaf}{\ensuremath{\text {Ba}}}
+\newcommand{\lovasz}{f_{\text{lo}}} %  extension
+\newcommand{\sigmoid}[1]{\text{sigmoid}(#1)} %  extension
+
+
+\renewcommand{\mid}{|}
+\newcommand{\kl}[2]{\mathbb{KL}(#1\|#2)}
+\newcommand{\entropy}[1]{\mathbb{H}(#1)}
