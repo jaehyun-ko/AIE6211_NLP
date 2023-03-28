@@ -1,0 +1,89 @@
+\documentclass[
+	11pt,
+	a4paper,
+	% kosection,
+	% footnote,
+	% nobookmarks,
+	% microtype,
+	figtabcapt,
+%	lwarp
+]{oblivoir}
+
+%%%%%%%%%%%%%%%%
+% Front Matter %
+%%%%%%%%%%%%%%%%
+
+\input{setup/packages}							% Declare packages
+\input{setup/week2_defs.tex}
+%%%%%%%%%%
+% Title, Authors, Date %
+%%%%%%%%%%
+
+\title{\vspace{-4cm}Week 3 : Generative Pre-trained Transformer}
+\author{120220210 고재현}
+\date{\today}
+
+\begin{document}
+
+%%%%%%%%%%
+% covers %
+%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%
+% Table of Contents %
+%%%%%%%%%%%%%%%%%%%%%
+\maketitle
+
+% \begin{abstract}
+% \end{abstract}
+
+\pagenumbering{roman}                           % Start page numbering in Roman numerals
+% \tableofcontents*        						% Add table of contents
+% \clearpage
+
+%%%%%%%%%%%%%%%%%
+% preliminaries %
+%%%%%%%%%%%%%%%%%
+
+\setcounter{table}{0}		                    % Reset table counter
+\setcounter{figure}{0}		                    % Reset figure counter
+
+%%%%%%%%%%%%%
+% Main Text %
+%%%%%%%%%%%%%
+
+\pagenumbering{arabic}							% Start page numbering in Arabic numerals
+
+\section{Introduction}
+The GPT class of language models has attracted global attention as they can produce text resembling that written by humans. This article focuses on the OpenAI GPT model, explaining it intuitively.
+It utilizes semi-supervised learning, pretraining on large unlabeled corpora and fine-tuning on small labeled ones. The decoder segment of the original Transformer is used as the base architecture and hyperparameters are covered.
+Tasks the GPT model was fine-tuned on are also discussed. Takeaways include the effect of 'locking' layers, zero-shot behavior, and the unsupervised language model's ability to recognize linguistic patterns.
+The performance of Transformer-based\cite{NIPS2017_3f5ee243} architectures for semi-supervised learning is compared to that of LSTMs.
+
+\section{GPT Training}\label{sec:training}
+To understand how GPT works, it's important to understand the approach it utilizes, which is semi-supervised learning.
+This approach includes an unsupervised component, pretraining, which uses an unlabeled corpus of tokenized text to find a good initialization point for learning a specific task, and a supervised component, fine-tuning, which uses a labeled corpus of tokenized text tailored to a specific language task.
+This approach improves the performance of language models significantly, as it utilizes the abundance of unlabeled text to extract linguistic patterns, which serves as a better starting point for specialization using smaller labeled datasets.
+GPT falls under the semi-supervised learning approach and utilizes pretraining and fine-tuning.
+
+The GPT model utilizes both the masked multi-head attention segment and the feed forward segment, along with the residuals and their corresponding addition and layer normalization steps.
+This involves position embedding of the learned embedding, followed by unidirectional self-attention through a masked multi-head attention segment. Residual is added and the result is layer normalized. The result then passes through a position-wise feedforward network and the residual is again added and layer normalized.
+The outcome either passes to the next decoder segment or is the output of the model as a whole.
+
+\subsection{fine-tuning}
+During pretraining, there are no labels to guide the training process, making it unsupervised.
+However, we can utilize our large corpus of tokens $T_1, ..., T_n$ by applying a (sliding) context window of length $k$.
+This allows us to structure the text into windows, such as $T_1, T_2, T_3$, $T_2, T_3, T_4$, and so on, with $k=3$.
+By feeding a context window to the GPT model, we can predict the next token.
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+% References Section %
+%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{ieeetr}						% Declare bibliography style
+\bibliography{week3.bib}							% Declare bibliography file
+
+\clearpage
+
+\end{document}
