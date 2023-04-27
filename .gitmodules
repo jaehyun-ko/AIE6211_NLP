@@ -1,0 +1,3 @@
+[submodule "HW/nanoGPT"]
+	path = HW/nanoGPT
+	url = https://github.com/jaehyun-ko/nanoGPT.git
